@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Question{% endblock %}
+{% block content %}
+    <form action="{% url 'question' form.test.id form.question.id %}" method="post">
+        <h3>{{ form.question }}</h3>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input class="blue-button" type="submit" value="Next">
+    </form>
+{% endblock %}

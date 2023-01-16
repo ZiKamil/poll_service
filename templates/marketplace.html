@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Marketplace{% endblock %}
+{% block content %}
+    <h1>Marketplace</h1>
+    <div class="cards-group">
+        {% if frame_list %}
+        {% for frame in frame_list %}
+        <div class="card">
+            <div class="card-shadow">
+                <form action="{% url 'frame' frame.id %}" method="post">
+                    <div style="width: 200px; height: 200px; background-color: {{ frame.color }}"></div>
+                    {% csrf_token %}
+                    <div class="card-content">
+                        <p>Type: {{ frame.type }}</p>
+                        <p>Price: {{ frame.price }}</p>
+                    </div>
+                    <div class="card-button">
+                        <input class="blue-button" type="submit" value="Buy">
+                    </div>
+                    {% if is_exist and frame.id == frame_id %}
+                        <p style="padding: 10px; color: red; font-weight: normal">You already have this frame</p>
+                    {% endif %}
+                    {% if not_enough and frame.id == frame_id %}
+                        <p style="padding: 10px; color: red; font-weight: normal">Not enough funds</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <p>No frame</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics{% endblock %}
+{% block content %}
+    <h1>Statistics</h1>
+    {% if users %}
+    <div class="statistic">
+        <table>
+        <tr>
+            <th>Email</th>
+            <th>Completed tests</th>
+            <th>Color differentiation</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>
+                    <p>{{ user.email }}</p>
+                </td>
+                <td>
+                    <p>{{ user.test_count }}</p>
+                </td>
+                {% if user.userframe_set %}
+                <td>
+                    {% for frame in user.userframe_set.all %}
+                        <p>{{ frame.frame.type }}:</p>
+                        <div style="height: 50px; height: 50px; background-color: {{ frame.frame.color }};"></div>
+                    {% endfor %}
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% else %}
+        <p>No frame</p>
+    {% endif %}
+{% endblock %}

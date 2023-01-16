@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}My frames{% endblock %}
+{% block content %}
+    <h1>My frames</h1>
+    <div class="cards-group">
+        {% if frames %}
+        {% for frame in frames %}
+        <div class="card">
+            <div class="card-shadow">
+                <form action="{% url 'my-frame' frame.frame.id %}" method="post">
+                    {% csrf_token %}
+                    <div style="background-color: {{ frame.frame.color }};width: 200px;height: 200px"></div>
+                    <div class="card-content">
+                        <p>Type: {{ frame.frame.type }}</p>
+                        <p>Price: {{ frame.frame.price }}</p>
+                        <p>Status: {{ frame.active }}</p>
+                    </div>
+                    <div class="card-button">
+                        <input class="blue-button" type="submit" value="Activate">
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <p>No frame</p>
+        {% endif %}
+    </div>
+{% endblock %}

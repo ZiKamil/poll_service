@@ -1,0 +1,46 @@
+.authorization {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:78vh;
+}
+
+.authorization-box{
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+.authorization a {
+    float: right;
+    color: black;
+    text-align: center;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 25px;
+    border-radius: 4px;
+}
+
+.authorization a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.grey-button {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 25px;
+    border-radius: 4px;
+    border: 0;
+    background-color: #fff;
+}
+
+.grey-button:hover {
+    background-color: #ddd;
+    color: black;
+}

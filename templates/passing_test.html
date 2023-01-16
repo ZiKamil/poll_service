@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Passing tests{% endblock %}
+{% block content %}
+    <h1>{{ test.name }}</h1>
+    <p>Click the start button to run the test</p>
+    <a class="blue-button" href="{% url 'question' test.id question.id %}">Start</a>
+{% endblock %}
