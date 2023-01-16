@@ -25,11 +25,13 @@ def user_login(request):
                         request.session['login_color'] = i.frame.color
                 return redirect('test')
             else:
-                return HttpResponse('Invalid login')
+                return render(request, 'login.html', {'form': form, 'login_error': True})
     else:
         form = LoginForm()
-
-    return render(request, 'login.html', {'form': form})
+    if request.user.is_anonymous:
+        return render(request, 'login.html', {'form': form})
+    else:
+        return redirect('test')
 
 
 def user_registration(request):
@@ -37,13 +39,17 @@ def user_registration(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = User.objects.create(email=cd['username'], password=cd['password'])
-            print(user)
+            try:
+                user = User.objects.create(email=cd['username'])
+                user.set_password(cd['password'])
+                user.save()
+            except Exception as e:
+                return render(request, 'register.html', {'form': form, "register_error": True})
             if user is not None:
                 login(request, user)
                 return redirect('test')
             else:
-                return HttpResponse('Invalid register')
+                return render(request, 'register.html', {'form': form, "register_error": True})
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -74,8 +80,6 @@ class TestPassView(generic.DetailView):
         q = Test.prefetch(q)
         test = q.filter(id=self.object.id).first()
         question = test.question_set.order_by("order").first()
-        print(test)
-        print(test.question_set.order_by("order"))
         context.update({
             'test': test,
             'question': question,
